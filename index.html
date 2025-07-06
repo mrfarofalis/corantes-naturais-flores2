@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corantes Naturais de Flores</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4A7C59 0%, #8B4A8B 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 1rem 0;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: #4A7C59;
+            color: white;
+        }
+        
+        .section {
+            padding: 3rem 0;
+        }
+        
+        .section.hidden {
+            display: none;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #666;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card h3 {
+            color: #4A7C59;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4A7C59, #8B4A8B);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 124, 89, 0.4);
+        }
+        
+        .simulation-area {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .plant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .plant-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .plant-card:hover {
+            transform: translateY(-3px);
+            border-color: #4A7C59;
+        }
+        
+        .plant-card.selected {
+            border-color: #4A7C59;
+            background: #e8f5e8;
+        }
+        
+        .plant-image {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .virtual-pot {
+            width: 200px;
+            height: 200px;
+            background: #e0e0e0;
+            border-radius: 50%;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            border: 5px solid #999;
+        }
+        
+        .quiz-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .question-card {
+            margin-bottom: 2rem;
+        }
+        
+        .options-grid {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .option-button {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .option-button:hover {
+            border-color: #4A7C59;
+            background: #e8f5e8;
+        }
+        
+        .option-button.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .option-button.incorrect {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-list {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .plant-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>🌸 Corantes Naturais de Flores</h1>
+            <p>Descubra a ciência por trás das cores da natureza</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul class="nav-list">
+                <li><a href="#" class="nav-link active" onclick="showSection('introducao')">📚 Introdução</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('simulacao')">⚗️ Simulação</a></li>
+                <li><a href="#" class="nav-link" onclick="showSection('quiz')">🧠 Quiz</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Seção 1: Introdução -->
+        <section id="introducao" class="section">
+            <div class="intro-text">
+                🌺 Bem-vindos ao fascinante mundo dos corantes naturais de flores! Desde os antigos egípcios até os dias atuais, as flores têm sido nossas parceiras na criação de cores vibrantes e sustentáveis.
+            </div>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🏺</div>
+                    <h3>Uma Tradição Milenar</h3>
+                    <p>Os egípcios já utilizavam hibisco e calêndula há milhares de anos, enquanto nossos povos indígenas dominavam a arte de extrair cores de flores e frutos.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚗️</div>
+                    <h3>Como Extrair as Cores</h3>
+                    <p>A extração acontece através de processos simples como ebulição e maceração. A água dissolve as antocianinas e outros pigmentos.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔗</div>
+                    <h3>O Segredo dos Mordentes</h3>
+                    <p>Para que as cores permaneçam vivas, utilizamos mordentes - substâncias que ajudam o pigmento a se fixar no material.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌸</div>
+                    <h3>Nossas Estrelas Coloridas</h3>
+                    <p>Hibisco (vermelho), Clitória (azul), Calêndula (amarelo), Urucum (laranja) e Espinafre (verde) - cada planta oferece pigmentos únicos!</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn-primary" onclick="showSection('simulacao')">🧪 Experimentar Agora!</button>
+            </div>
+        </section>
+
+        <!-- Seção 2: Simulação -->
+        <section id="simulacao" class="section hidden">
+            <h2 class="text-center">⚗️ Simulação Interativa de Tingimento</h2>
+            
+            <div class="simulation-area">
+                <h3>🌿 Escolha sua Planta Corante</h3>
+                <div class="plant-grid">
+                    <div class="plant-card" onclick="selectPlant(this, '#8B0000', 'Hibisco')">
+                        <div class="plant-image">🌺</div>
+                        <h4>Hibisco</h4>
+                        <p>Vermelho-escuro</p>
+                    </div>
+                    <div class="plant-card" onclick="selectPlant(this, '#4169E1', 'Clitória')">
+                        <div class="plant-image">🦋</div>
+                        <h4>Clitória</h4>
+                        <p>Azul intenso</p>
+                    </div>
+                    <div class="plant-card" onclick="selectPlant(this, '#FFD700', 'Calêndula')">
+                        <div class="plant-image">🌻</div>
+                        <h4>Calêndula</h4>
+                        <p>Amarelo vibrante</p>
+                    </div>
+                    <div class="plant-card" onclick="selectPlant(this, '#FF6347', 'Urucum')">
+                        <div class="plant-image">🟠</div>
+                        <h4>Urucum</h4>
+                        <p>Laranja</p>
+                    </div>
+                    <div class="plant-card" onclick="selectPlant(this, '#228B22', 'Espinafre')">
+                        <div class="plant-image">🥬</div>
+                        <h4>Espinafre</h4>
+                        <p>Verde</p>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <div class="virtual-pot" id="virtualPot" onclick="startDyeing()">
+                        🧵 Clique para tingir!
+                    </div>
+                    <p id="instructions">Primeiro, selecione uma planta acima</p>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn-primary" onclick="resetSimulation()">🔄 Reiniciar</button>
+                    <button class="btn-primary" onclick="showSection('quiz')">🧠 Fazer Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 3: Quiz -->
+        <section id="quiz" class="section hidden">
+            <h2 class="text-center">🧠 Quiz de Conhecimento</h2>
+            
+            <div class="quiz-container">
+                <div id="quizContent">
+                    <div class="question-card">
+                        <h3 id="questionText">Clique em "Iniciar Quiz" para começar!</h3>
+                        <div class="options-grid" id="optionsGrid">
+                            <!-- Opções aparecerão aqui -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn-primary" id="startQuiz" onclick="startQuiz()">🚀 Iniciar Quiz</button>
+                    <button class="btn-primary hidden" id="nextQuestion" onclick="nextQuestion()">➡️ Próxima</button>
+                    <button class="btn-primary hidden" id="restartQuiz" onclick="restartQuiz()">🔄 Refazer</button>
+                </div>
+
+                <div class="text-center" id="scoreArea" style="margin-top: 2rem;">
+                    <p>Pontuação: <span id="score">0</span> / <span id="totalScore">0</span></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Feira de Ciências - Corantes Naturais de Flores</p>
+            <p>Desenvolvido com 💚 para a educação científica</p>
+        </div>
+    </footer>
+
+    <script>
+        // Variáveis globais
+        let selectedPlant = null;
+        let selectedColor = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let quizStarted = false;
+
+        // Perguntas do quiz
+        const questions = [
+            {
+                question: "Qual civilização antiga já utilizava flores como hibisco e calêndula?",
+                options: [
+                    "Os pinguins imperadores da Antártida",
+                    "Os unicórnios da Floresta Encantada",
+                    "Os Egípcios Antigos",
+                    "Os marcianos que vieram buscar flores"
+                ],
+                correct: 2
+            },
+            {
+                question: "Qual flor produz um azul bem intenso?",
+                options: [
+                    "A Margarida telepática",
+                    "A Clitória (Clitoria Ternatea)",
+                    "O Dente-de-Leão futurista",
+                    "O Cacto músico"
+                ],
+                correct: 1
+            },
+            {
+                question: "Qual propriedade funcional extra o hibisco possui?",
+                options: [
+                    "Fazer pizzas se autoassarem",
+                    "Ação antioxidante",
+                    "Transformar meias em super-heróis",
+                    "Ensinar gatos a dançar"
+                ],
+                correct: 1
+            },
+            {
+                question: "Em que setores os corantes naturais estão ganhando destaque?",
+                options: [
+                    "Submarinos voadores",
+                    "Bolhas indestrutíveis",
+                    "Alimentos e Cosméticos",
+                    "Treinamento de dragões"
+                ],
+                correct: 2
+            },
+            {
+                question: "Por que a demanda por corantes naturais está crescendo?",
+                options: [
+                    "Encontrar tesouros oceânicos",
+                    "Curar preguiça matinal",
+                    "Sustentabilidade e menor impacto ambiental",
+                    "Fazer cachorros falarem latim"
+                ],
+                correct: 2
+            }
+        ];
+
+        // Funções de navegação
+        function showSection(sectionName) {
+            // Esconder todas as seções
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Mostrar seção selecionada
+            document.getElementById(sectionName).classList.remove('hidden');
+            
+            // Atualizar navegação
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Funções da simulação
+        function selectPlant(element, color, name) {
+            // Remover seleção anterior
+            document.querySelectorAll('.plant-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Selecionar nova planta
+            element.classList.add('selected');
+            selectedPlant = name;
+            selectedColor = color;
+            
+            // Atualizar instruções
+            document.getElementById('instructions').textContent = `${name} selecionado! Agora clique no recipiente para tingir.`;
+        }
+
+        function startDyeing() {
+            if (!selectedPlant) {
+                alert('Primeiro selecione uma planta!');
+                return;
+            }
+            
+            const pot = document.getElementById('virtualPot');
+            pot.style.backgroundColor = selectedColor;
+            pot.style.color = 'white';
+            pot.innerHTML = `🎉 Tingimento ${selectedPlant} concluído!`;
+            
+            document.getElementById('instructions').textContent = `Parabéns! Você criou um lindo tingimento ${selectedPlant.toLowerCase()}!`;
+        }
+
+        function resetSimulation() {
+            // Resetar seleção
+            document.querySelectorAll('.plant-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Resetar recipiente
+            const pot = document.getElementById('virtualPot');
+            pot.style.backgroundColor = '#e0e0e0';
+            pot.style.color = '#333';
+            pot.innerHTML = '🧵 Clique para tingir!';
+            
+            // Resetar variáveis
+            selectedPlant = null;
+            selectedColor = null;
+            
+            document.getElementById('instructions').textContent = 'Primeiro, selecione uma planta acima';
+        }
+
+        // Funções do quiz
+        function startQuiz() {
+            quizStarted = true;
+            currentQuestion = 0;
+            score = 0;
+            
+            document.getElementById('startQuiz').classList.add('hidden');
+            document.getElementById('totalScore').textContent = questions.length;
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.question;
+            
+            const optionsGrid = document.getElementById('optionsGrid');
+            optionsGrid.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index);
+                optionsGrid.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selectedIndex) {
+            const question = questions[currentQuestion];
+            const options = document.querySelectorAll('.option-button');
+            
+            // Desabilitar botões
+            options.forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+            
+            // Marcar resposta correta/incorreta
+            options.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Atualizar pontuação
+            if (selectedIndex === question.correct) {
+                score++;
+            }
+            
+            document.getElementById('score').textContent = score;
+            
+            // Mostrar botão próxima pergunta
+            setTimeout(() => {
+                document.getElementById('nextQuestion').classList.remove('hidden');
+            }, 1500);
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            
+            if (currentQuestion < questions.length) {
+                document.getElementById('nextQuestion').classList.add('hidden');
+                showQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            const percentage = (score / questions.length) * 100;
+            let message = '';
+            
+            if (percentage >= 80) {
+                message = '🌟 Excelente! Você é um expert em corantes naturais!';
+            } else if (percentage >= 60) {
+                message = '👏 Muito bem! Você tem um bom conhecimento!';
+            } else {
+                message = '📚 Continue estudando! A prática leva à perfeição!';
+            }
+            
+            document.getElementById('questionText').textContent = message;
+            document.getElementById('optionsGrid').innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <h3>Quiz Concluído!</h3>
+                    <p>Sua pontuação: ${score}/${questions.length} (${percentage.toFixed(0)}%)</p>
+                </div>
+            `;
+            
+            document.getElementById('nextQuestion').classList.add('hidden');
+            document.getElementById('restartQuiz').classList.remove('hidden');
+        }
+
+        function restartQuiz() {
+            quizStarted = false;
+            currentQuestion = 0;
+            score = 0;
+            
+            document.getElementById('score').textContent = '0';
+            document.getElementById('questionText').textContent = 'Clique em "Iniciar Quiz" para começar!';
+            document.getElementById('optionsGrid').innerHTML = '';
+            
+            document.getElementById('startQuiz').classList.remove('hidden');
+            document.getElementById('restartQuiz').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
